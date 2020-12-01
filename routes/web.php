@@ -27,3 +27,16 @@ $router->get('/posts/{id}', 'PostsController@show');
 $router->put('/posts/{id}', 'PostsController@update');
 //delete
 $router->delete('/posts/{id}', 'PostsController@destroy');
+
+//---> batas antar route api <---//
+
+//read
+$router->get('/cities', 'CitiesController@index');
+//post
+$router->post('/cities', 'CitiesController@store');
+//read by id
+$router->get('/cities/{id}', 'CitiesController@show');
+//update
+$router->put('/cities/{id}', 'CitiesController@update');
+//delete
+$router->delete('/cities/{id}', 'CitiesController@destroy');

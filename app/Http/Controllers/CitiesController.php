@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PostsController extends Controller
+class CitiesController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $cities = City::all();
 
         return response()->json([
             'success' => true,
-            'message' =>'List Semua Post',
-            'data'    => $posts
+            'message' =>'List Semua City',
+            'data'    => $cities
         ], 200);
     }
 
     public function store(Request $request)
 	{
 	    $validator = Validator::make($request->all(), [
-	        'title'   => 'required',
-	        'content' => 'required',
+	        'cityName'    => 'required',
+	        'country' 	  => 'required',
+	        'description' => 'required',
 	    ]);
 
 	    if ($validator->fails()) {
@@ -36,21 +37,22 @@ class PostsController extends Controller
 
 	    } else {
 
-	        $post = Post::create([
-	            'title'     => $request->input('title'),
-	            'content'   => $request->input('content'),
+	        $city = City::create([
+	            'cityName'    => $request->input('cityName'),
+	            'country'     => $request->input('country'),
+	        	'description' => $request->input('description'),
 	        ]);
 
-	        if ($post) {
+	        if ($city) {
 	            return response()->json([
 	                'success' => true,
-	                'message' => 'Post Berhasil Disimpan!',
-	                'data'    => $post
+	                'message' => 'City Berhasil Disimpan!',
+	                'data' 	  => $city
 	            ], 201);
 	        } else {
 	            return response()->json([
 	                'success' => false,
-	                'message' => 'Post Gagal Disimpan!',
+	                'message' => 'City Gagal Disimpan!',
 	            ], 400);
 	        }
 
@@ -59,18 +61,18 @@ class PostsController extends Controller
 
 	public function show($id)
 	{
-	   $post = Post::find($id);
+	   $city = City::find($id);
 
-	   if ($post) {
+	   if ($city) {
 	       return response()->json([
 	           'success'   => true,
-	           'message'   => 'Detail Post!',
-	           'data'      => $post
+	           'message'   => 'Detail City!',
+	           'data'      => $city
 	       ], 200);
 	   } else {
 	       return response()->json([
 	           'success' => false,
-	           'message' => 'Post Tidak Ditemukan!',
+	           'message' => 'City Tidak Ditemukan!',
 	       ], 404);
 	   }
 	}
@@ -78,8 +80,9 @@ class PostsController extends Controller
 	public function update(Request $request, $id)
 	{
 	    $validator = Validator::make($request->all(), [
-	        'title'   => 'required',
-	        'content' => 'required',
+	        'cityName'    => 'required',
+	        'country' 	  => 'required',
+	        'description' => 'required',
 	    ]);
 
 	    if ($validator->fails()) {
@@ -92,21 +95,22 @@ class PostsController extends Controller
 
 	    } else {
 
-	        $post = Post::whereId($id)->update([
-	            'title'     => $request->input('title'),
-	            'content'   => $request->input('content'),
+	        $city = City::whereId($id)->update([
+	            'cityName'     => $request->input('cityName'),
+	            'country'      => $request->input('country'),
+	            'description'  => $request->input('description'),
 	        ]);
 
-	        if ($post) {
+	        if ($city) {
 	            return response()->json([
 	                'success' => true,
-	                'message' => 'Post Berhasil Diupdate!',
-	                'data' 	  => $post
+	                'message' => 'City Berhasil Diupdate!',
+	                'data' 	  => $city
 	            ], 201);
 	        } else {
 	            return response()->json([
 	                'success' => false,
-	                'message' => 'Post Gagal Diupdate!',
+	                'message' => 'City Gagal Diupdate!',
 	            ], 400);
 	        }
 
@@ -115,15 +119,14 @@ class PostsController extends Controller
 
 	public function destroy($id)
 	{
-	    $post = Post::whereId($id)->first();
-		$post->delete();
+	    $city = City::whereId($id)->first();
+		$city->delete();
 
-	    if ($post) {
+	    if ($city) {
 	        return response()->json([
 	            'success' => true,
-	            'message' => 'Post Berhasil Dihapus!',
+	            'message' => 'City Berhasil Dihapus!',
 	        ], 200);
 	    }
-
 	}
 }
