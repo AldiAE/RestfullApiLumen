@@ -13,9 +13,7 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/', 'CitiesController@index');
 
 //read
 $router->get('/posts', 'PostsController@index');
